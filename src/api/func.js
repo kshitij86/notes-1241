@@ -1,13 +1,10 @@
 import api from "./api";
 
-// endpoints = {
-//   createNote: "/create/",
-//   fetchAll: "/fetch/all",
-//   fetchOne: "/fetch/one",
-// };
-
 const fetchAllNotes = () => api.get("/fetch/all");
+const dropOneNote = (drop_id) =>
+  api.post("/drop/one", { note_id: drop_id.toString() });
 
 export default {
   fetchAllNotes,
+  dropOneNote,
 };

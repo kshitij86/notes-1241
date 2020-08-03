@@ -7,10 +7,16 @@ import {
   Button,
   IconButton,
 } from "@material-ui/core";
+import Api from "../api/func";
 
-export default function NoteCard({ title, body }) {
+export default function NoteCard({ title, body, id }) {
+  async function dropNote(drop_id) {
+    const response = await Api.dropOneNote(drop_id);
+    console.log(response.data);
+    window.location.reload();
+  }
+
   const cardStyle = {
-    flex: 1,
     background: "#eee",
     width: 300,
     height: 300,
@@ -29,12 +35,17 @@ export default function NoteCard({ title, body }) {
           <Button
             variant="contained"
             color="secondary"
-            style={{ marginTop: 150 }}
+            style={{ marginBottom: 10 }}
             disableElevation
           >
             View Note
           </Button>
-          <IconButton style={{ marginTop: 150, marginLeft: 100 }}>
+          <IconButton
+            style={{ marginBottom: 10, marginLeft: 100 }}
+            onClick={() => {
+              dropNote(id);
+            }}
+          >
             <Delete />
           </IconButton>
         </CardContent>
