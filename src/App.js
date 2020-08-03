@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+// import { Route, Link, BrowserRouter } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import NavBar from "./components/NavBar";
+import NoteList from "./components/NoteList";
+import Api from "./api/func";
+
+export default class App extends Component {
+  state = {
+    notes: [],
+  };
+
+  loadNotes = async () => {
+    const response = await Api.fetchAllNotes();
+    this.setState({
+      notes: response.data,
+      addNew: false,
+    });
+  };
+
+  componentDidMount() {
+    this.loadNotes();
+  }
+
+  navbarCallback = () => {};
+
+  render() {
+    return (
+      <div style={{ flex: 1, justifyContent: "flex-start" }}>
+        <NavBar addNewCallback={this.navbarCallback}></NavBar>
+        <NoteList notes={this.state.notes} />
+      </div>
+    );
+  }
 }
-
-export default App;
