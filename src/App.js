@@ -3,18 +3,20 @@ import React, { Component } from "react";
 
 import NavBar from "./components/NavBar";
 import NoteList from "./components/NoteList";
+import Spinner from "./components/Spinner";
 import Api from "./api/func";
 
 export default class App extends Component {
   state = {
     notes: [],
+    loading: true,
   };
 
   loadNotes = async () => {
     const response = await Api.fetchAllNotes();
     this.setState({
       notes: response.data,
-      addNew: false,
+      loading: false,
     });
   };
 
@@ -26,9 +28,21 @@ export default class App extends Component {
 
   render() {
     return (
-      <div style={{ flex: 1, justifyContent: "flex-start" }}>
-        <NavBar addNewCallback={this.navbarCallback}></NavBar>
-        <NoteList notes={this.state.notes} />
+      <div
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          justifyItems: "center",
+        }}
+      >
+        <NavBar></NavBar>
+        {this.state.loading ? (
+          <Spinner />
+        ) : (
+          <NoteList notes={this.state.notes} />
+        )}
       </div>
     );
   }

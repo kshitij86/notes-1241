@@ -30,7 +30,6 @@ export default function NoteCard({ title, body }) {
             variant="contained"
             color="secondary"
             style={{ marginTop: 150 }}
-            disabled
             disableElevation
           >
             View Note
